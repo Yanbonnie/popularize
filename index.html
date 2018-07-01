@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <meta content="viewport-fit=cover"> -->
+    <title>TEST</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/weui.css">
+    <style>
+        [v-clock] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./images/cert1.png" class="canvasImg" style="position: absolute;z-index: -1;" alt="">
+    <div class="wrap index_page" id="index-box" v-clock>
+
+        <div id="slide01" class="tab">
+            <ul class="content">
+                <li class="page1">
+                    <img src="./images/title.png" class="title" alt="">
+                    <img src="./images/cloudy3.png" class="cloudy3 cloudy" alt="">
+                    <img src="./images/man_3.png" class="man3" alt="">
+                    <img src="./images/cloudy2.png" class="cloudy2 cloudy" alt="">
+                    <img src="./images/man_2.png" class="man2" alt="">
+                    <img src="./images/cloudy1.png" class="cloudy1 cloudy" alt="">
+                    <img src="./images/man_1.png" class="man1" alt="">
+                    <div class="rule">
+                        <img src="./images/rule.png" alt="">
+                    </div>
+                    <img src="./images/copyright.png" alt="" class="copyright">
+                </li>
+                <li>
+                    <div class="letter sign_page_scrollBody">
+                        <h3>亲爱的同学们、家长们：</h3>
+                        <p>盼望着，盼望着，暑假的脚步近了，旅游、探亲、上兴趣班……暑假计划是否已经安排好了呢？这个夏天，你可以过个不一样的暑假！2018年3月11日，十三届全国人大一次会议第三次全体会议通过了《中华人民共和国宪法修正案》。宪法是国家的根本法，是治国安邦的总章程，是公民权利的保障书，宪法与我们每个人都息息相关。这个暑假，我们倡议，同学们可以和爸爸妈妈一起学习宪法，共同阅读《中华人民共和国宪法》原文，并以文字或图画的盼望着，盼望着，暑假的脚步近了，旅游、探亲、上兴趣班……暑假计划是否已经安排好了呢？这个夏天，你可以过个不一样的暑假！2018年3月11日，十三届全国人大一次会议第三次全体会议通过了《中华人民共和国宪法修正案》。宪法是国家的根本法，是治国安邦的总章程，是公民权利的保障书，宪法与我们每个人都息息相关。这个暑假，我们倡议，同学们可以和爸爸妈妈一起学习宪法，共同阅读《中华人民共和国宪法》原文，并以文字或图画的
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="select select1">
+                        <h3 @click="organizeState = true">{{Organize[orgIndex]}}</h3>
+                        <dl v-show="organizeState">
+                            <dt @click="orgIndex = index;organizeState=false" :class="[orgIndex == index ? 'active':'']" v-for="(item,index) in Organize">{{item}}</dt>
+                        </dl>
+                    </div>
+                    <div class="select select2">
+                        <h3 @click="typeState = true">{{Type[typeIndx]}}</h3>
+                        <dl v-show="typeState">
+                            <dt @click="typeIndx = index;typeState=false" :class="[typeIndx == index ? 'active':'']" v-for="(item,index) in Type">{{item}}</dt>
+                        </dl>
+                    </div>
+                    <div class="showArea" v-show="typeIndx == 0">
+                        <div class="contain">
+                            <textarea placeholder="文字限制在300字以内"></textarea>
+                        </div>
+                        <img class="line" src="./images/line.png" alt="">
+                    </div>
+                    <div class="showArea" v-show="typeIndx == 1">
+                        <div class="flexBox">
+                            <span>
+                                <img src="./images/pic.png" alt="">
+                                <b class="close">
+                                    <img src="./images/close.png" alt="">
+                                </b>
+                            </span>
+                            <span>
+                                <img src="./images/page2.jpg" alt="">
+                                <b class="close">
+                                    <img src="./images/close.png" alt="">
+                                </b>
+                            </span>
+                            <span class="add">
+                                <img src="./images/add.png" alt="">
+                            </span>
+                        </div>
+                        <div class="tip">可选择1-3张</div>
+                    </div>
+                    <span class="btn">
+                        <img src="./images/finish_btn.png" alt="">
+                    </span>
+                </li>
+                <li>
+                    <input class="input input1" type="text" placeholder="请输入姓名">
+                    <input class="input input2" type="text" placeholder="请输入学校名称">
+                    <input class="input input3" type="text" placeholder="请输入学生班级">
+                    <input class="input input4" type="text" placeholder="请输入联系电话">
+                    <input class="input input5" type="text" placeholder="请输入联系地址">
+                    <span class="btn">
+                        <img src="./images/submit_btn.png" alt="">
+                    </span>
+                </li>
+                <li>
+
+                    <div class="canvas">
+                        <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
+                            <!--width="320" height="180" style="width:160px;height:90px;"-->
+                            当前浏览器不支持canvas
+                        </canvas>
+                    </div>
+                    <span class="btn">
+                        <img src="./images/save.png" alt="">
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <!-- 加载中 -->
+        <div id="loadingToast" v-show="loading.status">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content" v-html="loading.txt"></p>
+            </div>
+        </div>
+        <!--按钮提示框-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" v-show="dialog.status">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">{{dialog.txt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="dialog.status = false">知道了</a>
+                </div>
+            </div>
+        </div>
+        <!-- 提示框，1000消失 -->
+        <div class="tipBox" v-show="alert.status">
+            <div class="tibBox_inner">
+                <p v-html="alert.txt"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/zepto.min.js"></script>
+    <script type="text/javascript">
+        var basep = "images/", //图片目录
+            preLoadSource = [ //背景资源
+                basep + "active_btn.png",
+                basep + "back.png",
+                basep + "bg.jpg",
+                basep + "board.png",
+                basep + "btn_1.png",
+                basep + "btn_2.png",
+                basep + "btn_3.png",
+                basep + "btn_4.png",
+                basep + "detail_bg_01.png",
+                basep + "detail_bg_02.png",
+                basep + "detail_bg_03.png",
+                basep + "house.jpg",
+                basep + "rule.png",
+                basep + "title.png",
+                basep + "toupiao.png",
+                basep + "toupiao_gray.png",
+            ];
+    </script>
+    <!-- <script src="js/loading.js"></script> -->
+    <script src="js/vue.min.js"></script>
+    <script>
+        //加载资源数组必须在loading之前进行配置
+        $(function () {
+            new Vue({
+                el: "#index-box",
+                data: {
+                    scrollPage: null,
+                    organizeState: false,
+                    Organize: ["家庭", "个人"],
+                    orgIndex: 0,
+                    Type: ["文本", "图片"],
+                    typeState: false,
+                    typeIndx: 1,
+                    loading: {        //加载中弹框
+                        status: false,
+                        txt: '加载中...'
+                    },
+                    dialog: {    //带按钮提示框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
+                    alert: {     //提示自动消失框
+                        status: false,
+                        txt: '这里是提示内容'
+                    },
+                    W: '',
+                    H: '',
+                    canvasUrl: ''
+                },
+                methods: {
+                    drawCanvas() {
+                        var This = this;
+                        var cvs = document.getElementById("canvas");
+                        var w = $('.canvas').width();
+                        var h = $('.canvas').height();
+                        //创建image对象
+                        var imgObj = new Image();
+                        imgObj.src = "./images/cert1.png";
+                        //待图片加载完后，将其显示在canvas上
+                        imgObj.onload = function () {
+                            var ctx = cvs.getContext('2d');
+                            var Font = Number(This.W) / 13;
+                            ctx.drawImage(this, 0, 0, This.W * 2, This.H * 2);//this即是imgObj,保持图片的原始大小：470*480
+                            ctx.font = Font + "px 隶书";
+                            ctx.fillStyle = "#613b31";
+                            ctx.fillText("广州东山实验小学-陈鸣同学：", This.W / 6.5, This.H / 1.3);
+                            var num = '7';
+                            var Txt = '祝贺你们一家成为广东第' + num + '个';
+                            ctx.fillText(Txt, This.W / 4, This.H / 1.1);
+                            ctx.fillStyle = "#ad1815";
+                            ctx.fillText("学法好家庭", This.W * (1.22 + (0.04 * (num.length - 1))), This.H / 1.1);
+                            ctx.fillStyle = "#613b31";
+                            ctx.fillText("希望你们多多推广，让更多家庭成为“学法好家庭”", This.W / 6.5, This.H / 0.95);
+                            This.convertCanvasToImage(cvs);
+                        }
+                    },
+                    convertCanvasToImage(canvas) {
+                        var image = new Image();
+                        image.src = canvas.toDataURL("image/png")
+                        $('.canvas').append(image);
+                    }
+                },
+                mounted: function () {
+                    this.scrollPage = new mo.PageSlide({
+                        target: $('#slide01 .content li'),
+                        playTo: 0,
+                        // touchMove: false
+                    });
+                    this.W = $('.canvas').width();
+                    this.H = $('.canvas').height();
+                    this.drawCanvas();
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>
