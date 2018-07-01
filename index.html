@@ -17,7 +17,6 @@
 </head>
 
 <body>
-    <img src="./images/cert1.png" class="canvasImg" style="position: absolute;z-index: -1;" alt="">
     <div class="wrap index_page" id="index-box" v-clock>
 
         <div id="slide01" class="tab">
@@ -43,57 +42,65 @@
                     </div>
                 </li>
                 <li>
-                    <div class="select select1">
-                        <h3 @click="organizeState = true">{{Organize[orgIndex]}}</h3>
-                        <dl v-show="organizeState">
-                            <dt @click="orgIndex = index;organizeState=false" :class="[orgIndex == index ? 'active':'']" v-for="(item,index) in Organize">{{item}}</dt>
-                        </dl>
-                    </div>
-                    <div class="select select2">
-                        <h3 @click="typeState = true">{{Type[typeIndx]}}</h3>
-                        <dl v-show="typeState">
-                            <dt @click="typeIndx = index;typeState=false" :class="[typeIndx == index ? 'active':'']" v-for="(item,index) in Type">{{item}}</dt>
-                        </dl>
-                    </div>
-                    <div class="showArea" v-show="typeIndx == 0">
-                        <div class="contain">
-                            <textarea placeholder="文字限制在300字以内"></textarea>
-                        </div>
-                        <img class="line" src="./images/line.png" alt="">
-                    </div>
-                    <div class="showArea" v-show="typeIndx == 1">
-                        <div class="flexBox">
-                            <span>
-                                <img src="./images/pic.png" alt="">
-                                <b class="close">
-                                    <img src="./images/close.png" alt="">
-                                </b>
+                    <div style="position: relative;">
+                        <img src="./images/page3.jpg" alt="">
+                        <div class="select select1">
+                                <h3 @click="organizeState = true">{{Organize[orgIndex]}}</h3>
+                                <dl v-show="organizeState">
+                                    <dt @click="orgIndex = index;organizeState=false" :class="[orgIndex == index ? 'active':'']" v-for="(item,index) in Organize">{{item}}</dt>
+                                </dl>
+                            </div>
+                            <div class="select select2">
+                                <h3 @click="typeState = true">{{Type[typeIndx]}}</h3>
+                                <dl v-show="typeState">
+                                    <dt @click="typeIndx = index;typeState=false" :class="[typeIndx == index ? 'active':'']" v-for="(item,index) in Type">{{item}}</dt>
+                                </dl>
+                            </div>
+                            <div class="showArea" v-show="typeIndx == 0">
+                                <div class="contain">
+                                    <textarea placeholder="文字限制在300字以内"></textarea>
+                                </div>
+                                <img class="line" src="./images/line.png" alt="">
+                            </div>
+                            <div class="showArea" v-show="typeIndx == 1">
+                                <div class="flexBox">
+                                    <span>
+                                        <img src="./images/pic.png" alt="">
+                                        <b class="close">
+                                            <img src="./images/close.png" alt="">
+                                        </b>
+                                    </span>
+                                    <span>
+                                        <img src="./images/page2.jpg" alt="">
+                                        <b class="close">
+                                            <img src="./images/close.png" alt="">
+                                        </b>
+                                    </span>
+                                    <span class="add">
+                                        <img src="./images/add.png" alt="">
+                                    </span>
+                                </div>
+                                <div class="tip">可选择1-3张</div>
+                            </div>
+                            <span class="btn">
+                                <img src="./images/finish_btn.png" alt="">
                             </span>
-                            <span>
-                                <img src="./images/page2.jpg" alt="">
-                                <b class="close">
-                                    <img src="./images/close.png" alt="">
-                                </b>
-                            </span>
-                            <span class="add">
-                                <img src="./images/add.png" alt="">
-                            </span>
-                        </div>
-                        <div class="tip">可选择1-3张</div>
                     </div>
-                    <span class="btn">
-                        <img src="./images/finish_btn.png" alt="">
-                    </span>
+                    
                 </li>
                 <li>
-                    <input class="input input1" type="text" placeholder="请输入姓名">
-                    <input class="input input2" type="text" placeholder="请输入学校名称">
-                    <input class="input input3" type="text" placeholder="请输入学生班级">
-                    <input class="input input4" type="text" placeholder="请输入联系电话">
-                    <input class="input input5" type="text" placeholder="请输入联系地址">
-                    <span class="btn">
-                        <img src="./images/submit_btn.png" alt="">
-                    </span>
+                    <div style="position: relative;">
+                        <img src="./images/page4.jpg" alt="">
+                        <input class="input input1" type="text" placeholder="请输入姓名">
+                        <input class="input input2" type="text" placeholder="请输入学校名称">
+                        <input class="input input3" type="text" placeholder="请输入学生班级">
+                        <input class="input input4" type="text" placeholder="请输入联系电话">
+                        <input class="input input5" type="text" placeholder="请输入联系地址">
+                        <span class="btn">
+                            <img src="./images/submit_btn.png" alt="">
+                        </span>
+                    </div>
+                    
                 </li>
                 <li>
 
@@ -225,8 +232,8 @@
                 mounted: function () {
                     this.scrollPage = new mo.PageSlide({
                         target: $('#slide01 .content li'),
-                        playTo: 0,
-                        // touchMove: false
+                        playTo: 2,
+                        touchMove: false
                     });
                     this.W = $('.canvas').width();
                     this.H = $('.canvas').height();

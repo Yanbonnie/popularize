@@ -115,8 +115,7 @@ body{
                     }
                 }
                 &:nth-child(3){
-                    background: url($URL+'page3.jpg') no-repeat #13baff;
-                    background-size: 100% auto;
+                    background: #13baff;
                     .select{
                         position: absolute;
                         left: 25%;
@@ -148,10 +147,10 @@ body{
                             font-weight: bold;
                         }
                         &.select1{                            
-                            top: 17.8%;
+                            top:18.2%;
                         }
                         &.select2{
-                            top: 28%;
+                            top: 28.5%;
                         }
                     }
                     .showArea{
