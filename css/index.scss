@@ -304,7 +304,9 @@ body{
             width: 100%;
             height: REM(850);
             // background: rgba(0,0,0,0.5);
-            position: relative;
+            position: absolute;
+            left: 0;
+            top: 0;
             canvas{
                 position: absolute;
                 width: 100%;
@@ -322,9 +324,13 @@ body{
             }
         }
         .btn{
+            position: absolute;
+            top: 76%;
+            left: 50%;
+            margin-left: REMTWO(358);
             width: REM(358);
-            display: block;
-            margin: REM(50) auto 0;
+            // display: block;
+            // margin: REM(50) auto 0;
         }
     }
 }

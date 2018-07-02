@@ -109,16 +109,19 @@
             
         </div>
         <div class="page5">
-
-            <div class="canvas">
-                <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
-                    <!--width="320" height="180" style="width:160px;height:90px;"-->
-                    当前浏览器不支持canvas
-                </canvas>
+            <div style="position: relative;">
+                <img src="./images/page5_1.jpg" alt="">
+                <div class="canvas">
+                    <canvas id="canvas" :width="this.W*2" :height="this.H*2" :style="'width:'+this.W+'px;height:'+this.H+'px'">
+                        <!--width="320" height="180" style="width:160px;height:90px;"-->
+                        当前浏览器不支持canvas
+                    </canvas>
+                </div>
+                <span class="btn">
+                    <img src="./images/save.png" alt="">
+                </span>
             </div>
-            <span class="btn">
-                <img src="./images/save.png" alt="">
-            </span>
+            
         </div>
         <!-- 加载中 -->
         <div id="loadingToast" v-show="loading.status">
@@ -177,11 +180,11 @@
             new Vue({
                 el: "#index-box",
                 data: {
-                    name:'',
-                    schoolName:'',
-                    className:'',
-                    mobile:'',
-                    address:'',
+                    name:'小妮子',
+                    schoolName:'广东轻工',
+                    className:'一班',
+                    mobile:'18825039689',
+                    address:'广州市白云区',
                     scrollPage: null,        //pageslide对象
                     organizeState: false,    
                     Organize: ["家庭", "个人"],
