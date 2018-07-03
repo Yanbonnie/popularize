@@ -12,11 +12,35 @@
     </style>
 </head>
 
-<body>
-    <div class="box ">
+<body id="body">
+    <!--<div class="box ">
         <span class="line bounceAnimate"></span>
-    </div>
+    </div>-->
+    <script src="js/zepto.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var PAGEY = 0;
+            var MOVE = 0 ;
+            var obj = document.getElementById('body');
+            obj.addEventListener('touchstart',function(event){
+                // event.preventDefault();
+                var touch = event.targetTouches[0];
+                PAGEY = touch.pageY;
+            })
+            obj.addEventListener('touchmove', function(event) {
 
+                // 如果这个元素的位置内只有一个手指的话
+                if (event.targetTouches.length == 1) {
+                // 　event.preventDefault();// 阻止浏览器默认事件，重要 
+                    var touch = event.targetTouches[0];
+                    MOVE = touch.pageY;
+                    }
+            }, false);
+            obj.addEventListener('touchend',function(event){
+                console.log(PAGEY - MOVE)
+            })
+        })
+    </script>
 
 </body>
 
