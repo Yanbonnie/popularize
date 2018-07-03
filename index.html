@@ -264,8 +264,8 @@
                         imgObj.onload = function () {
                             var ctx = cvs.getContext('2d');
                             var Font = Number(This.W) / 13;
-                            var num = '7';
-                            var Txt1 = '祝贺你们一家成为广东第' + num + '个';
+                            var num = '78974';
+                            var Txt1 = This.orgIndex == 0 ? '祝贺你们一家成为广东第' + num + '个' : '祝贺你成为广东第' + num + '个';
                             var Title = This.orgIndex == 0 ? '学法好家庭': '学法好标兵';
                             var endTxt = This.orgIndex == 0 ? '希望你们多多推广，让更多家庭成为“学法好家庭”':'希望你们多多推广，让更多人成为“学法好标兵”'
 
@@ -275,9 +275,14 @@
                             ctx.fillText(This.schoolName+"-"+This.name+"同学：", This.W / 6.5, This.H / 1.3);
                             
                             ctx.fillText(Txt1, This.W / 4, This.H / 1.1);
+                            
                             ctx.fillStyle = "#ad1815";
-
-                            ctx.fillText(Title, This.W * (1.22 + (0.04 * (num.length - 1))), This.H / 1.1);
+                            if(This.orgIndex == 0){
+                                ctx.fillText(Title, This.W * (1.22 + (0.04 * (num.length - 1))), This.H / 1.1);
+                            }else{
+                                ctx.fillText(Title, This.W * (0.98 + (0.04 * (num.length - 1))), This.H / 1.1);
+                            }
+                            
                             ctx.fillStyle = "#613b31";
                             ctx.fillText(endTxt, This.W / 6.5, This.H / 0.95);
                             This.convertCanvasToImage(cvs);
@@ -311,15 +316,14 @@
                         playTo: 0,
                         touchMove: false
                     });
-                    
-
-                    // $('#slide01 li').eq(0).on('touchmove',function(){
-                    //     This.scrollPage.playTo(1)
-                    // })
                     setTimeout(function(){
                         This.scrollPage.playTo(1)
                     },10000)
+                    // This.W = $('.canvas').width();
+                    // This.H = $('.canvas').height();
+                    // this.drawCanvas();
 
+                    //滑动事件
                     var PAGEY = 0;
                     var MOVE = 0 ;
                     var PAGEY2 = 0;
