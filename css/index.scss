@@ -45,7 +45,7 @@ body{
                         top: 6%;
                     }
                     .man1{
-                        width: REM(162);
+                        width: REM(194);
                         position: absolute;
                         left: 50%;
                         margin-left: -2rem;
@@ -56,12 +56,14 @@ body{
                         position: absolute;
                         left: 13%;
                         top: 33%;
+                        animation-delay: 0.5s;
                     }
                     .man3{
                         width: REM(207);
                         position: absolute;
                         right:  8%;
                         top:30%;
+                        animation-delay: 0.5s;
                     }
                     .cloudy{
                         position: absolute;
@@ -77,13 +79,30 @@ body{
                         }
                     }
                     .rule{
-                        width: REM(425);
+                        width: REM(444);
                         position: absolute;
                         top: 65%;
                         left: 50%;
-                        margin-left: REMTWO(425);
+                        margin-left: REMTWO(444);
+                        animation-direction: 1.2s;
+                        .lineBox{
+                            width: REM(140);
+                            height: 4.6rem;
+                            position: absolute;
+                            left: 2.2%;
+                            top: 7%;
+                            // background: rgba(0,0,0,0.5);
+                        }
+                        .line{
+                            position: absolute;
+                            width: 100%;
+                            top: 0;
+                            left: REM(2.5);
+                            width: REM(135);
+                        }
                     }
                     .copyright{
+                        animation-direction: 1.5s;
                         width: REM(610);
                         top: 85%;
                         left: 50%;
@@ -473,4 +492,81 @@ body{
 
 .bounceAnimate{
     animation:bounce 3s linear infinite;
+}
+
+.zoomIn{
+    animation:zoomIn 1s ease-in both;
+}
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale3d(.3,.3,.3)
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+
+
+.zoomInDown{
+    animation:zoomInDown 1s ease-in both;
+}
+@keyframes zoomInDown {
+    0% {
+        opacity: 0;
+        transform: scale3d(.1,.1,.1) translate3d(0,-1000px,0);
+        animation-timing-function: cubic-bezier(.55,.055,.675,.19)
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale3d(.475,.475,.475) translate3d(0,60px,0);
+        animation-timing-function: cubic-bezier(.175,.885,.32,1)
+    }
+}
+
+.fadeInLeft{
+    animation:fadeInLeft 1s ease-in both;
+}
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(-100%,0,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+.fadeInRight{
+    animation:fadeInRight 1s ease-in both;
+}
+@keyframes fadeInRight{
+    0% {
+        opacity: 0;
+        transform: translate3d(100%,0,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+.fadeInUp{
+    animation:fadeInUp 1s ease-in both;
+}
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translate3d(0,100%,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
 }

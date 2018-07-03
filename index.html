@@ -21,22 +21,28 @@
 
         <div id="slide01" class="tab">
             <ul class="content">
-                <li class="page1">
-                    <img src="./images/title.png" class="title" alt="">
-                    <img src="./images/cloudy3.png" class="cloudy3 cloudy" alt="">
-                    <img src="./images/man_3.png" class="man3" alt="">
-                    <img src="./images/cloudy2.png" class="cloudy2 cloudy" alt="">
-                    <img src="./images/man_2.png" class="man2" alt="">
-                    <img src="./images/cloudy1.png" class="cloudy1 cloudy" alt="">
-                    <img src="./images/man_1.png" class="man1" alt="">
-                    <div class="rule">
-                        <img src="./images/rule.png" alt="">
+                <li class="page1" id="page1">
+                    <div style="position:relative">
+                        <img src="./images/bg.jpg" alt="">
+                        <img src="./images/title.png " class="title zoomIn" alt="">
+                        <img src="./images/cloudy3.png" class="cloudy3 cloudy" alt="">
+                        <img src="./images/man_3.png" class="man3 fadeInRight" alt="">
+                        <img src="./images/cloudy2.png" class="cloudy2 cloudy" alt="">
+                        <img src="./images/man_2.png" class="man2 fadeInLeft" alt="">
+                        <img src="./images/cloudy1.png" class="cloudy1 cloudy" alt="">
+                        <img src="./images/man_1.png" class="man1 zoomIn" alt="">
+                        <div class="rule fadeInUp">
+                            <img src="./images/rule.png" alt="">
+                            <div class="lineBox">
+                                <img class="line bounceAnimate" src="./images/scan_line.png" alt="">
+                            </div>
+                        </div>
+                        <img src="./images/copyright.png" alt="" class="copyright fadeInUp">
                     </div>
-                    <img src="./images/copyright.png" alt="" class="copyright">
                 </li>
                 <li>
                     <div style="position: relative;">
-                        <img src="./images/page2.jpg" alt="">
+                        <img src="./images/page2.jpg" alt="" id="page2">
                         <div class="letter sign_page_scrollBody">
                             <h3>亲爱的同学们、家长们：</h3>
                             <p>盼望着，盼望着，暑假的脚步近了，旅游、探亲、上兴趣班……暑假计划是否已经安排好了呢？这个夏天，你可以过个不一样的暑假！2018年3月11日，十三届全国人大一次会议第三次全体会议通过了《中华人民共和国宪法修正案》。宪法是国家的根本法，是治国安邦的总章程，是公民权利的保障书，宪法与我们每个人都息息相关。这个暑假，我们倡议，同学们可以和爸爸妈妈一起学习宪法，共同阅读《中华人民共和国宪法》原文，并以文字或图画的盼望着，盼望着，暑假的脚步近了，旅游、探亲、上兴趣班……暑假计划是否已经安排好了呢？这个夏天，你可以过个不一样的暑假！2018年3月11日，十三届全国人大一次会议第三次全体会议通过了《中华人民共和国宪法修正案》。宪法是国家的根本法，是治国安邦的总章程，是公民权利的保障书，宪法与我们每个人都息息相关。这个暑假，我们倡议，同学们可以和爸爸妈妈一起学习宪法，共同阅读《中华人民共和国宪法》原文，并以文字或图画的
@@ -100,8 +106,9 @@
                 <input class="input input1" type="text" v-model="name" placeholder="请输入姓名">
                 <input class="input input2" type="text" v-model="schoolName" placeholder="请输入学校名称">
                 <input class="input input3" type="text" v-model="className" placeholder="请输入学生班级">
-                <input class="input input4" type="text" v-model="mobile" placeholder="请输入联系电话">
-                <input class="input input5" type="text" v-model="address" placeholder="请输入联系地址">
+                
+                <input class="input input4" type="text" v-model="address" placeholder="请输入学号">
+                <input class="input input5" type="text" v-model="mobile" placeholder="请输入联系电话">
                 <span class="btn" @click="submitHandle">
                     <img src="./images/submit_btn.png" alt="">
                 </span>
@@ -306,14 +313,63 @@
                     });
                     
 
-                    $('#slide01 li').eq(0).on('touchmove',function(){
-                        This.scrollPage.playTo(1)
-                    })
+                    // $('#slide01 li').eq(0).on('touchmove',function(){
+                    //     This.scrollPage.playTo(1)
+                    // })
                     setTimeout(function(){
                         This.scrollPage.playTo(1)
                     },10000)
 
-                    
+                    var PAGEY = 0;
+                    var MOVE = 0 ;
+                    var PAGEY2 = 0;
+                    var MOVE2 = 0;
+                    var obj = document.getElementById('page1');
+                    var obj2 = document.getElementById('page2');
+
+                    obj.addEventListener('touchstart',function(event){
+                        // event.preventDefault();
+                        var touch = event.targetTouches[0];
+                        PAGEY = touch.pageY;
+                    })
+                    obj.addEventListener('touchmove', function(event) {
+
+                        // 如果这个元素的位置内只有一个手指的话
+                        if (event.targetTouches.length == 1) {
+                        // 　event.preventDefault();// 阻止浏览器默认事件，重要 
+                            var touch = event.targetTouches[0];
+                            MOVE = touch.pageY;
+                            }
+                    }, false);
+                    obj.addEventListener('touchend',function(event){
+                        console.log(PAGEY - MOVE)
+                        var DixY = PAGEY - MOVE;
+                        if(DixY > 50){
+                            This.scrollPage.playTo(1)
+                        }
+                    })
+
+                    obj2.addEventListener('touchstart',function(event){
+                        // event.preventDefault();
+                        var touch = event.targetTouches[0];
+                        PAGEY2 = touch.pageY;
+                    })
+                    obj2.addEventListener('touchmove', function(event) {
+
+                        // 如果这个元素的位置内只有一个手指的话
+                        if (event.targetTouches.length == 1) {
+                        // 　event.preventDefault();// 阻止浏览器默认事件，重要 
+                            var touch = event.targetTouches[0];
+                            MOVE2 = touch.pageY;
+                            }
+                    }, false);
+                    obj2.addEventListener('touchend',function(event){
+                        console.log(PAGEY - MOVE)
+                        var DixY = PAGEY2 - MOVE2;
+                        if(DixY < 0){
+                            This.scrollPage.playTo(0)
+                        }
+                    })
                 }
             })
         })
