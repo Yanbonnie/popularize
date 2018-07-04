@@ -165,25 +165,35 @@
     <script type="text/javascript">
         var basep = "images/", //图片目录
             preLoadSource = [ //背景资源
-                basep + "active_btn.png",
-                basep + "back.png",
+                basep + "add.png",
                 basep + "bg.jpg",
-                basep + "board.png",
-                basep + "btn_1.png",
-                basep + "btn_2.png",
-                basep + "btn_3.png",
-                basep + "btn_4.png",
-                basep + "detail_bg_01.png",
-                basep + "detail_bg_02.png",
-                basep + "detail_bg_03.png",
-                basep + "house.jpg",
+                basep + "cert.png",
+                basep + "cert1.png",
+                basep + "cert2.png",
+                basep + "close.png",
+                basep + "cloudy1.png",
+                basep + "cloudy2.png",
+                basep + "cloudy3.png",
+                basep + "copyright.png",
+                basep + "finish_btn.png",
+                basep + "join_on.png",
+                basep + "line.png",
+                basep + "man_1.png",
+                basep + "man_2.png",
+                basep + "man_3.png",
+                basep + "page2.jpg",
+                basep + "page3.jpg",
+                basep + "page4.jpg",
+                basep + "page5_1.jpg",
+                basep + "pic.png",
                 basep + "rule.png",
+                basep + "save.png",
+                basep + "scan_line.png",
+                basep + "submit_btn.png",
                 basep + "title.png",
-                basep + "toupiao.png",
-                basep + "toupiao_gray.png",
             ];
     </script>
-    <!-- <script src="js/loading.js"></script> -->
+    <script src="js/loading.js"></script>
     <script src="js/vue.min.js"></script>
     <script>
         //加载资源数组必须在loading之前进行配置
@@ -245,10 +255,10 @@
                         //测试********************************************
                         var res = {
                             status:0,
-                            is_complete:1,
+                            is_complete:0,
                             stor:1000,
-                            name:'严抱你',
-                            join_type:2
+                            name:'',
+                            join_type:1
                         }
                         setTimeout(function(){
                             This.loading.status = false;
@@ -606,7 +616,7 @@
                         This.scrollPage.playTo(1)
                     },10000)
                     
-
+                    //获取个人信息
                     this.getInfoHandle();
                     // This.W = $('.canvas').width();
                     // This.H = $('.canvas').height();
