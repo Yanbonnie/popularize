@@ -53,7 +53,7 @@
                 </li>
             </ul>
         </div>
-        <div class="page3" style="display:block;">
+        <div class="page3">
             <div style="position: relative;">
                 <img src="./images/page3.jpg" alt="">
                 <div class="select select1">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="showArea" v-show="typeIndx == 0">
                         <div class="contain">
-                            <textarea placeholder="文字限制在300字以内"></textarea>
+                            <textarea v-model="uploadTxt" placeholder="文字限制在300字以内"></textarea>
                         </div>
                         <img class="line" src="./images/line.png" alt="">
                     </div>
@@ -79,20 +79,19 @@
                        <!--  <input class="file" type="file" name="file2" accept="image/*">
                         <input class="file" type="file" name="file3" accept="image/*"> -->
                         <div class="flexBox">
-                            <span>
-                                <img src="./images/pic.png" alt="">
-                                <b class="close">
+                            <span v-for="(item,index) in uploadImg" :key="index">
+                                <img :src="item" alt="">
+                                <b class="close" @click="deleteImg(item)">
                                     <img src="./images/close.png" alt="">
                                 </b>
-                                
                             </span>
-                            <span>
+                            <!-- <span>
                                 <img src="./images/page2.jpg" alt="">
                                 <b class="close">
                                     <img src="./images/close.png" alt="">
                                 </b>                               
-                            </span>
-                            <span class="add" @click="selectImg">
+                            </span> -->
+                            <span class="add" @click="selectImg" v-if="uploadImg.length < 3">
                                 <img src="./images/add.png" alt="">
                             </span>
                             
@@ -192,11 +191,11 @@
             new Vue({
                 el: "#index-box",
                 data: {
-                    name:'小妮子',
-                    schoolName:'广东轻工',
-                    className:'一班',
-                    mobile:'18825039689',
-                    address:'广州市白云区',
+                    name:'',
+                    schoolName:'',
+                    className:'',
+                    mobile:'',
+                    address:'',
                     scrollPage: null,        //pageslide对象
                     organizeState: false,    
                     Organize: ["家庭", "个人"],
@@ -204,6 +203,8 @@
                     Type: ["文本", "图片"],
                     typeState: false,
                     typeIndx: 1,
+                    uploadTxt:'',     //文字内容
+                    uploadImg:[],     //图片
                     loading: {        //加载中弹框
                         status: false,
                         txt: '加载中...'
@@ -220,16 +221,97 @@
                     H: '',
                     canvasUrl: '',
 
+                    URL:{
+                        getInfo:'getInfo',                    //获取信息
+                        uploadFile:'uploadFile',              //上传图片
+                        submitWorks:'submitWorks',            //提交作品
+                        submitData:'submitData',              //提交资料
+                    },
+                    is_complete:'',                           //是否生成过 1为已生成，0为未生成
+                    stor:'',                                  //第几号
+                    name:'',                                  //姓名
+                    join_type:'',                             //参加类型 1-家庭 2个人
+
 
                 },
                 methods: {
+                    
+                    //进入页面，获取信息
+                    getInfoHandle:function(){
+                        var This = this;
+                        This.loading.status = true;
+                        This.loading.txt = '加载中...';
+
+                        //测试********************************************
+                        var res = {
+                            status:0,
+                            is_complete:1,
+                            stor:1000,
+                            name:'严抱你',
+                            join_type:2
+                        }
+                        setTimeout(function(){
+                            This.loading.status = false;
+                            This.loading.txt = '';
+                            if(res.status == 0){
+                                This.is_complete=res.is_complete;
+                                This.stor = res.stor;
+                                // This.name = res.name;
+                                This.schoolName = res.name ? res.name : '';
+                                // This.join_type = res.join_type;
+                                This.orgIndex = res.join_type ? res.join_type-1 : 0;
+                            }else{
+                                This.alertHandle(res.msg)
+                            }
+                        },1500)
+                        return;
+                        //测试end*******************************************
+
+                        $.ajax({
+                            url:this.URL['getInfo'],
+                            dataType: 'json',
+                            type: 'get',
+                            data: {},
+                            async: true,
+                            success: function (res) {
+                                This.loading.status = false;
+                                This.loading.txt = '';
+                                if(res.status == 0){
+                                    This.is_complete=res.is_complete;
+                                    This.stor = res.stor;
+                                    // This.name = res.name;
+                                    This.schoolName = res.name ? res.name : '';
+                                    // This.join_type = res.join_type;
+                                    This.orgIndex = res.join_type ? res.join_type-1 : 0;
+                                }else{
+                                    This.alertHandle(res.msg)
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                this.alertHandle('服务出错了')
+                                console.log(XMLHttpRequest)
+                            }
+                        })
+                    },
+                    //删除图片
+                    deleteImg:function(item){
+                        this.uploadImg = this.uploadImg.filter(function(val){
+                            return val != item;
+                        })
+                    },
                     //选择图片
                     selectImg:function(){
                         var This = this;
                         $('#file').val('');
                         $('#file').click();
                         $('#file').unbind().on('change',function(){
-                            // alert($('#file')[0].files[0])
+
+                            //测试*********************************************
+                            This.uploadFile('abc');
+                            return;
+                            //测试end******************************************
+
+                            
                             var FileObj = $('#file')[0].files[0];
                             if(!FileObj){
                                 return false;
@@ -239,10 +321,32 @@
                     },
                     //上传图片
                     uploadFile:function(fileObj){
+                        var This = this;
+
+
+                        //测试*********************************
+                        this.loading.status = true;
+                        this.loading.txt = '上传中...';
+                        var res = {
+                            status:0,
+                            msg:'',
+                            url:['./images/pic.png','./images/man_2.png','./images/man_3.png'],
+                        }
+                        setTimeout(function(){
+                            This.loading.status = false;
+                            This.loading.txt = '';
+                            This.uploadImg.push(res.url[This.uploadImg.length]);
+                        },1500);
+                        return;
+                        //测试end*******************************************
+
+                        
                         var formData = new FormData();
                         formData.append('file',fileObj);
+                        this.loading.status = true;
+                        this.loading.txt = '上传中...';
                         $.ajax({
-                            url: 'uploadImg',
+                            url: this.URL['uploadImg'],
                             dataType: 'json',
                             type: 'post',
                             // headers: {'Content-Type': 'image/jpeg'},
@@ -250,12 +354,17 @@
                             contentType: false,
                             cache: false,
                             data: formData,
-                        }).done((json) => {
+                            success:function(res){
+                                This.loading.status = false;
+                                This.loading.txt = '';
+                                if(res.status == 0){
+                                    This.uploadImg.push(res.url);
+                                }else{
+                                    This.alertHandle(res.msg);
+                                }
+                            }
 
-
-                        }).fail((err) => {
-                            console.log(err)
-                        });
+                        })
                     },
                     //提交个人信息
                     submitHandle:function(){
@@ -270,24 +379,162 @@
                         }
                         this.loading.status = true;
                         this.loading.txt = '提交中...';
+
+
+                        //测试*****************************************
+                        var res = {
+                            status:0,
+                            msg:"提交成功"
+                        }
                         setTimeout(function(){
-                            $("#page4").hide();
-                            $('.page5').show();
-                            This.W = $('.canvas').width();
-                            This.H = $('.canvas').height();
-                            This.drawCanvas();
+                            This.loading.status = false;
+                            This.loading.txt = '';
+                            if(res.status == 0){
+                                This.alertHandle("提交完成");
+                                setTimeout(function(){
+                                    $("#page4").hide();
+                                    $('.page5').show();
+                                    This.W = $('.canvas').width();
+                                    This.H = $('.canvas').height();
+                                    This.drawCanvas();
+                                },1500)
+                            }else{
+                                This.alertHandle(res.msg)
+                            }
+                        },1500)
+                        return;
+                        //测试end********************************************
+
+                        $.ajax({
+                            url:this.URL['submitData'],
+                            dataType: 'json',
+                            type: 'post',
+                            data: {
+                                name:this.name,
+                                school:this.schoolName,
+                                class_room:this.className,
+                                student_id:this.address,
+                                mobile:this.mobile
+                            },
+                            async: true,
+                            success: function (res) {
+                                This.loading.status = false;
+                                This.loading.txt = '';
+                                if(res.status == 0){
+                                    This.alertHandle("提交完成");
+                                    setTimeout(function(){
+                                        $("#page4").hide();
+                                        $('.page5').show();
+                                        This.W = $('.canvas').width();
+                                        This.H = $('.canvas').height();
+                                        This.drawCanvas();
+                                    },1500)
+                                }else{
+                                    This.alertHandle(res.msg)
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                This.alertHandle('服务出错了')
+                                console.log(XMLHttpRequest)
+                            }
                         })
                     },
                     //上传图片或文字 完成
                     finishHandle:function(){
-                        $("#page3").hide();
-                        $('.page4').show();
+                        var content = '';
+                        var This = this;
+                        if(this.typeIndx == 0){  //上传文字
+                            if(!this.uploadTxt){
+                                this.alertHandle("请输入文字");
+                                return;
+                            }
+                            if(this.uploadTxt.length > 300){
+                                this.alertHandle("文字内容不能超过300字");
+                                return;
+                            }
+
+                            content = this.uploadTxt;
+                        }else{ //上传图片
+                            if(this.uploadImg.length == 0){
+                                this.alertHandle("请上传图片");
+                                return;
+                            }
+                            content = this.uploadImg.map(function(item,index){
+                                return{
+                                    index:item
+                                }
+                            });
+                            console.log(content)
+                            content = JSON.stringify(content)
+                            console.log(content)
+                        }
+                        This.loading.status = true;
+                        This.loading.txt = '提交中...';
+
+
+                        //测试***********************************************
+                        var res = {
+                            status:0,
+                            msg:''
+                        }
+                        setTimeout(function(){
+                            This.loading.status = false;
+                            This.loading.txt = '';
+                            if(res.status == 0){
+                                This.alertHandle("上传完成");
+                                setTimeout(function(){
+                                    $("#page3").hide();
+                                    $('.page4').show();
+                                },1500)
+                            }else{
+                                This.alertHandle(res.msg)
+                            }
+                        },1500)
+                        return;
+                        //测试end**********************************************
+
+                        $.ajax({
+                            url:this.URL['submitWorks'],
+                            dataType: 'json',
+                            type: 'post',
+                            data: {
+                                join_type:this.orgIndex+1,
+                                opus_type:this.typeIndx+1,
+                                content:content
+                            },
+                            async: true,
+                            success: function (res) {
+                                This.loading.status = false;
+                                This.loading.txt = '';
+                                if(res.status == 0){
+                                    This.alertHandle("上传完成");
+                                    setTimeout(function(){
+                                        $("#page3").hide();
+                                        $('.page4').show();
+                                    },1500)
+                                }else{
+                                    This.alertHandle(res.msg)
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                This.alertHandle('服务出错了')
+                                console.log(XMLHttpRequest)
+                            }
+                        })
+                        
                     },
                     //点击立即参加
                     joinHandle:function(){
-                        console.log("立即参加");
+                        var This = this;
                         $("#slide01").hide();
-                        $('.page3').show();
+                        if(this.is_complete){
+                            $('.page5').show();
+                            This.W = $('.canvas').width();
+                            This.H = $('.canvas').height();
+                            This.drawCanvas();
+                        }else{
+                            $('.page3').show();
+                        }
                     },
                     //图片合成
                     drawCanvas:function() {
@@ -304,7 +551,7 @@
                             var ctx = cvs.getContext('2d');
                             var Font = Number(This.W) / 13;
                             var num = '78974';
-                            var Txt1 = This.orgIndex == 0 ? '祝贺你们一家成为广东第' + num + '个' : '祝贺你成为广东第' + num + '个';
+                            var Txt1 = This.orgIndex == 0 ? '祝贺你们一家成为广东第' + This.stor + '个' : '祝贺你成为广东第' + This.stor + '个';
                             var Title = This.orgIndex == 0 ? '学法好家庭': '学法好标兵';
                             var endTxt = This.orgIndex == 0 ? '希望你们多多推广，让更多家庭成为“学法好家庭”':'希望你多多推广，让更多人成为“学法好标兵”'
 
@@ -317,9 +564,9 @@
                             
                             ctx.fillStyle = "#ad1815";
                             if(This.orgIndex == 0){
-                                ctx.fillText(Title, This.W * (1.22 + (0.04 * (num.length - 1))), This.H / 1.1);
+                                ctx.fillText(Title, This.W * (1.22 + (0.04 * (This.stor.length - 1))), This.H / 1.1);
                             }else{
-                                ctx.fillText(Title, This.W * (0.98 + (0.04 * (num.length - 1))), This.H / 1.1);
+                                ctx.fillText(Title, This.W * (0.98 + (0.04 * (This.stor.length - 1))), This.H / 1.1);
                             }
                             
                             ctx.fillStyle = "#613b31";
@@ -345,7 +592,7 @@
                         setTimeout(function(){
                             This.alert.status = false;
                             This.alert.txt = '';
-                        },2000)
+                        },1500)
                     }
                 },
                 mounted: function () {
@@ -358,6 +605,9 @@
                     setTimeout(function(){
                         This.scrollPage.playTo(1)
                     },10000)
+                    
+
+                    this.getInfoHandle();
                     // This.W = $('.canvas').width();
                     // This.H = $('.canvas').height();
                     // this.drawCanvas();
@@ -385,7 +635,6 @@
                             }
                     }, false);
                     obj.addEventListener('touchend',function(event){
-                        console.log(PAGEY - MOVE)
                         var DixY = PAGEY - MOVE;
                         if(DixY > 50){
                             This.scrollPage.playTo(1)
@@ -407,7 +656,6 @@
                             }
                     }, false);
                     obj2.addEventListener('touchend',function(event){
-                        console.log(PAGEY - MOVE)
                         var DixY = PAGEY2 - MOVE2;
                         if(DixY < 0){
                             This.scrollPage.playTo(0)
