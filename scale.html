@@ -40,6 +40,78 @@
                 console.log(PAGEY - MOVE)
             })
         })
+
+        //点击上传图片
+            // uploadImgChange(fileId,upLoadId,inputId){
+            //     let oMyFile = $("#"+fileId);     //file
+            //     let upLoadObj = $('#'+upLoadId); //uploadBox
+            //     let inputObj = $('#'+inputId); //inputBox
+            //     oMyFile.val("");
+            //     oMyFile.click();
+            //     oMyFile.unbind().on('change',()=>{
+
+            //         let fileObj = oMyFile[0].files[0];
+            //         if(!fileObj){
+            //               return false;
+            //         }
+            //         this.uploadFile(fileObj,upLoadObj,inputObj)
+
+            //     })
+            // },
+            // //上传文件
+            // uploadFile(fileObj,upLoadObj,inputObj){
+            //     let that = this;
+            //     let formData = new FormData();
+            //     formData.append('file',fileObj);
+            //     formData.append('code',this.code);
+            //     this.upLoadCurrent =  upLoadObj;
+            //     $.ajax({
+            //         url: this.apiPath+this.URL['uploadImg'],
+            //         dataType: 'json',
+            //         type: 'post',
+            //         // headers: {'Content-Type': 'image/jpeg'},
+            //         processData: false,
+            //         contentType: false,
+            //         cache: false,
+            //         data: formData,
+            //         xhr: () => {
+            //           var xhr = $.ajaxSettings.xhr();
+            //           if(that.onprogress && xhr.upload) {
+            //             xhr.upload.addEventListener("progress" , that.onprogress, false);
+            //             xhr.upload.addEventListener("loadend" , ()=> { //上传完成
+            //                 upLoadObj.find('.sideLeft').children('.step2').hide();
+            //                 upLoadObj.find('.sideCenter').children('.step2').hide();
+            //                 upLoadObj.find('.sideLeft').children('.step3').show();
+            //                 upLoadObj.find('.sideCenter').children('.step3').show();
+
+            //             }, false);
+            //            return xhr;
+            //           }
+            //       }
+            //     }).done((json) => {
+            //         if(json.code == 200){
+            //             upLoadObj.find('.sideLeft').children('.step3').attr('src',json.data.src.indexOf('http') != -1 ? json.data.src : this.apiPath+json.data.src);
+            //             inputObj.val(json.data.value);
+            //         }
+
+            //     }).fail((err) => {
+            //         if(err.responseJSON.alertType){
+            //             this.modelCommonTip(err.responseJSON.alertMsg);
+            //         }
+            //     });
+            // },
+            // //监听上传进度
+            // onprogress(evt) {
+            //   var loaded = evt.loaded;     //已经上传大小情况
+            //   var tot = evt.total;      //附件总大小
+            //   var per = Math.floor(100*loaded/tot);  //已经上传的百分比
+            //   this.upLoadCurrent.find('.sideLeft').children('.step1').hide();
+            //   this.upLoadCurrent.find('.sideLeft').children('.step3').hide();
+            //   this.upLoadCurrent.find('.sideCenter').children('.step1').hide();
+            //   this.upLoadCurrent.find('.sideCenter').children('.step3').hide();
+            //   this.upLoadCurrent.find('.sideLeft').children('.step2').show().html(per +"%" );
+            //   this.upLoadCurrent.find('.sideCenter').children('.step2').show();
+            // },
     </script>
 
 </body>
