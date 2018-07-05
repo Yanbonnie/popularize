@@ -25,7 +25,16 @@ img{
 body{
 
 }
-
+.music{
+    position: fixed;
+    top: 2%;
+    right: 2%;
+    z-index: 10;    
+    img{
+        width: REM(45);
+        height: REM(45);
+    }
+}
 #index-box{
     height: 100%;
     width: 100%;
@@ -109,6 +118,14 @@ body{
                         position: absolute;
                         margin-left: REMTWO(610)
                     }
+                    .down{
+                        width: REM(50);
+                        position: absolute;
+                        bottom:10%;
+                        left: 50%;
+                        margin-left: REMTWO(50);
+                    }
+                   
                 }
                 &:nth-child(2){
                     background: #20bafe;
@@ -127,8 +144,16 @@ body{
                             
                         }
                         p{
+                            a{
+                                color: #0058bf;
+                            }
                             text-indent: 2rem;
-                            
+                            &.li{
+                                text-indent: 0;
+                                span{
+                                    font-weight: bold;
+                                }
+                            }
                         }
                     }
                     .btn{
@@ -582,5 +607,24 @@ body{
     to {
         opacity: 1;
         transform: none
+    }
+}
+
+.overPage{
+    animation:overPage 1.5s ease-in infinite;
+}
+@keyframes overPage {
+    0% {
+        bottom: 10%;
+        opacity: 1;
+    }
+
+    80%{
+        bottom: 3%;
+        opacity: 0.8;
+    }
+    100%{
+        bottom: 0%;
+        opacity: 0;
     }
 }

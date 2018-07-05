@@ -18,11 +18,7 @@
 
 <body>
     <div class="wrap index_page" id="index-box" v-clock>
-        <div class="music" @click="operMusic">
-            <img src="./images/music.png" v-if="music" alt="">
-            <img src="./images/music_CLOSE.png" v-else alt="">
-			<audio style="display:none" src="./images/5018.mp3" id="music_id"  controls="controls" loop></audio>
-		</div>
+
         <div id="slide01" class="tab">
             <ul class="content">
                 <li class="page1" id="page1">
@@ -42,9 +38,7 @@
                             </div>
                         </div>
                         <img src="./images/copyright.png" alt="" class="copyright fadeInUp">
-                        
                     </div>
-                    <img class="down overPage" src="./images/down.png" alt="">
                 </li>
                 <li>
                     <div style="position: relative;">
@@ -125,7 +119,7 @@
             </div>
             
         </div>
-        <div class="page5" style="display: block;">
+        <div class="page5">
             <div style="position: relative;">
                 <img src="./images/page5_1.jpg" alt="">
                 <div class="canvas">
@@ -207,19 +201,19 @@
             new Vue({
                 el: "#index-box",
                 data: {
-                    name:'asdfa',
-                    schoolName:'sdfas',
-                    className:'asdfas',
-                    mobile:'18825036985',
-                    address:'asda',
+                    name:'',
+                    schoolName:'',
+                    className:'',
+                    mobile:'',
+                    address:'',
                     scrollPage: null,        //pageslide对象
                     organizeState: false,    
                     Organize: ["家庭", "个人"],
                     orgIndex: 0,
                     Type: ["文本", "图片"],
                     typeState: false,
-                    typeIndx:0,
-                    uploadTxt:'aaaaaaa',     //文字内容
+                    typeIndx: 1,
+                    uploadTxt:'',     //文字内容
                     uploadImg:[],     //图片
                     loading: {        //加载中弹框
                         status: false,
@@ -247,19 +241,11 @@
                     stor:'',                                  //第几号
                     name:'',                                  //姓名
                     join_type:'',                             //参加类型 1-家庭 2个人
-                    music:true,
+
 
                 },
                 methods: {
-                    operMusic:function(){
-                        this.music = this.music == true ? false : true;
-                        var music_id = document.getElementById('music_id');
-                        if(this.music){                           
-                            music_id.play();
-                        }else{
-                            music_id.pause();
-                        }
-                    },
+                    
                     //进入页面，获取信息
                     getInfoHandle:function(){
                         var This = this;
@@ -269,11 +255,10 @@
                         //测试********************************************
                         var res = {
                             status:0,
-                            is_complete:1,
-                            stor:'11111111',
-                            name:'小妮子',
-                            join_type:1,
-                            school:'广东轻工',
+                            is_complete:0,
+                            stor:1000,
+                            name:'',
+                            join_type:1
                         }
                         setTimeout(function(){
                             This.loading.status = false;
@@ -281,9 +266,9 @@
                             if(res.status == 0){
                                 This.is_complete=res.is_complete;
                                 This.stor = res.stor;
-                                This.name = res.name;
+                                // This.name = res.name;
                                 This.schoolName = res.name ? res.name : '';
-                                This.join_type = res.join_type;
+                                // This.join_type = res.join_type;
                                 This.orgIndex = res.join_type ? res.join_type-1 : 0;
                             }else{
                                 This.alertHandle(res.msg)
@@ -409,15 +394,13 @@
                         //测试*****************************************
                         var res = {
                             status:0,
-                            msg:"提交成功",
-                            stor:'10'
+                            msg:"提交成功"
                         }
                         setTimeout(function(){
                             This.loading.status = false;
                             This.loading.txt = '';
                             if(res.status == 0){
                                 This.alertHandle("提交完成");
-                                This.stor = res.stor;
                                 setTimeout(function(){
                                     $("#page4").hide();
                                     $('.page5').show();
@@ -449,7 +432,6 @@
                                 This.loading.txt = '';
                                 if(res.status == 0){
                                     This.alertHandle("提交完成");
-                                    
                                     setTimeout(function(){
                                         $("#page4").hide();
                                         $('.page5').show();
@@ -570,12 +552,6 @@
                         var cvs = document.getElementById("canvas");
                         var w = $('.canvas').width();
                         var h = $('.canvas').height();
-
-                        This.orgIndex = 1;
-                        This.stor = '100';
-                        This.schoolName = '广轻';
-                        This.name='小妮子';
-
                         //创建image对象
                         var imgObj = new Image();
                         var imgUrl = This.orgIndex == 0 ? './images/cert1.png' : './images/cert2.png'
@@ -585,12 +561,9 @@
                             var ctx = cvs.getContext('2d');
                             var Font = Number(This.W) / 13;
                             var num = '78974';
-                            // var Txt1 = This.orgIndex == 0 ? '祝贺你们一家成为广东第' + This.stor + '个' : '祝贺你成为广东第' + This.stor + '个';
-                            var Txt1 = This.orgIndex == 0 ? '祝贺你们一家成为广东第': '祝贺你成为广东第';
-                            // var Txt2 = '个';
-                            var Title = This.orgIndex == 0 ? This.stor+'个学法好家庭': This.stor+'个学法好标兵';
-                            // var endTxt = This.orgIndex == 0 ? '希望你们多多推广，让更多家庭成为“学法好家庭”':'希望你多多推广，让更多人成为“学法好标兵”'
-                            var endTxt = '快和你的小伙伴一起分享这份喜悦和荣誉吧！';
+                            var Txt1 = This.orgIndex == 0 ? '祝贺你们一家成为广东第' + This.stor + '个' : '祝贺你成为广东第' + This.stor + '个';
+                            var Title = This.orgIndex == 0 ? '学法好家庭': '学法好标兵';
+                            var endTxt = This.orgIndex == 0 ? '希望你们多多推广，让更多家庭成为“学法好家庭”':'希望你多多推广，让更多人成为“学法好标兵”'
 
                             ctx.drawImage(this, 0, 0, This.W * 2, This.H * 2);//this即是imgObj,保持图片的原始大小：470*480
                             ctx.font = Font + "px 隶书";
@@ -599,23 +572,15 @@
                             
                             ctx.fillText(Txt1, This.W / 4, This.H / 1.1);
                             
-                            // ctx.fillStyle = "#ad1815";
-                            // ctx.font = 'bold '+Font + "px 隶书 ";
-                            // if(This.orgIndex == 0){
-                            //     ctx.fillText(This.stor, This.W * (1.12 + (0.04 * (This.stor.length/2 - 1))), This.H / 1.1);
-                            // }
-
                             ctx.fillStyle = "#ad1815";
-                            ctx.font = Font + "px 隶书";
-                            
                             if(This.orgIndex == 0){
-                                ctx.fillText(Title, This.W *1.1, This.H / 1.1);
+                                ctx.fillText(Title, This.W * (1.22 + (0.04 * (This.stor.length - 1))), This.H / 1.1);
                             }else{
-                                ctx.fillText(Title, This.W * 0.88, This.H / 1.1);
+                                ctx.fillText(Title, This.W * (0.98 + (0.04 * (This.stor.length - 1))), This.H / 1.1);
                             }
                             
                             ctx.fillStyle = "#613b31";
-                            ctx.fillText(endTxt, This.W / 4, This.H / 0.95);
+                            ctx.fillText(endTxt, This.W / 6.5, This.H / 0.95);
                             This.convertCanvasToImage(cvs);
                         }
                     },
@@ -651,14 +616,11 @@
                         This.scrollPage.playTo(1)
                     },10000)
                     
-                    var music_id = document.getElementById('music_id');
-                    music_id.play();
-
                     //获取个人信息
-                    // this.getInfoHandle();
-                    This.W = $('.canvas').width();
-                    This.H = $('.canvas').height();
-                    this.drawCanvas();
+                    this.getInfoHandle();
+                    // This.W = $('.canvas').width();
+                    // This.H = $('.canvas').height();
+                    // this.drawCanvas();
 
                     //滑动事件
                     var PAGEY = 0;
