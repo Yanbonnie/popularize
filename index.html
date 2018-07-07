@@ -114,8 +114,8 @@
             <div style="position: relative;">
                 <img src="./images/page4.jpg" alt="">
                 <input class="input input1" type="text" v-model="name" placeholder="请输入姓名">
-                <input class="input input2" type="text" v-model="schoolName" placeholder="请输入学校名称">
-                <input class="input input3" type="text" v-model="className" placeholder="请输入学生班级">
+                <input class="input input2" type="text" v-model="schoolName" placeholder="例:广州市天河区华阳小学">
+                <input class="input input3" type="text" v-model="className" placeholder="例:五年级一班">
                 
                 <input class="input input4" type="text" v-model="address" placeholder="请输入学号">
                 <input class="input input5" type="text" v-model="mobile" placeholder="请输入联系电话">
@@ -207,11 +207,11 @@
             new Vue({
                 el: "#index-box",
                 data: {
-                    name:'asdfa',
-                    schoolName:'sdfas',
-                    className:'asdfas',
-                    mobile:'18825036985',
-                    address:'asda',
+                    name:'',
+                    schoolName:'',
+                    className:'',
+                    mobile:'',
+                    address:'',
                     scrollPage: null,        //pageslide对象
                     organizeState: false,    
                     Organize: ["家庭", "个人"],
@@ -571,10 +571,10 @@
                         var w = $('.canvas').width();
                         var h = $('.canvas').height();
 
-                        This.orgIndex = 1;
+                        This.orgIndex = 0;
                         This.stor = '100';
-                        This.schoolName = '广轻';
-                        This.name='小妮子';
+                        This.schoolName = '广州市天河区华阳小学';
+                        This.name='王小明';
 
                         //创建image对象
                         var imgObj = new Image();
@@ -665,6 +665,7 @@
                     var obj2 = document.getElementById('page2');
 
                     obj.addEventListener('touchstart',function(event){
+                        $('.lineBox').remove();
                         // event.preventDefault();
                         var touch = event.targetTouches[0];
                         PAGEY = touch.pageY;
