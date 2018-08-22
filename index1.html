@@ -19,7 +19,7 @@
 <body>
     <div class="wrap index_page" id="index-box" v-clock>
 
-        <div id="slide01" class="tab">
+        <div id="slide01" class="tab" style="display:block;">
             <ul class="content">
                 <li class="page1" id="page1">
                     <div style="position:relative">
@@ -53,7 +53,7 @@
                 </li>
             </ul>
         </div>
-        <div class="page3">
+        <div class="page3" style="display:none;">
             <div style="position: relative;">
                 <img src="./images/page3.jpg" alt="">
                 <div class="select select1">
@@ -104,7 +104,7 @@
             </div>
             
         </div>
-        <div class="page4">
+        <div class="page4" style="display:none;">
             <div style="position: relative;">
                 <img src="./images/page4.jpg" alt="">
                 <input class="input input1" type="text" v-model="name" placeholder="请输入姓名">
@@ -119,7 +119,7 @@
             </div>
             
         </div>
-        <div class="page5">
+        <div class="page5" style="display:none;"> 
             <div style="position: relative;">
                 <img src="./images/page5_1.jpg" alt="">
                 <div class="canvas">
@@ -585,7 +585,9 @@
                         }
                     },
                     convertCanvasToImage:function(canvas) {
+					console.log(canvas)
                         var image = new Image();
+						
                         image.src = canvas.toDataURL("image/png")
                         $('.canvas').append(image);
                     },
@@ -618,9 +620,9 @@
                     
                     //获取个人信息
                     this.getInfoHandle();
-                    // This.W = $('.canvas').width();
-                    // This.H = $('.canvas').height();
-                    // this.drawCanvas();
+                    This.W = $('.canvas').width();
+                    This.H = $('.canvas').height();
+                    This.drawCanvas();
 
                     //滑动事件
                     var PAGEY = 0;

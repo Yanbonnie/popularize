@@ -201,6 +201,7 @@
     </script>
     <!-- <script src="js/loading.js"></script> -->
     <script src="js/vue.min.js"></script>
+	<script src="js/jweixin-1.0.0.js"></script>
     <script>
         //加载资源数组必须在loading之前进行配置
         $(function () {
@@ -247,7 +248,7 @@
                     stor:'',                                  //第几号
                     name:'',                                  //姓名
                     join_type:'',                             //参加类型 1-家庭 2个人
-                    music:true,
+                    music:false,
 
                 },
                 methods: {
@@ -648,7 +649,12 @@
                     },10000)
                     
                     var music_id = document.getElementById('music_id');
-                    music_id.play();
+                    //music_id.play();
+					
+					$('#music_id').click();
+					/*wx.ready(function () {
+						$('#music_id')[0].play();
+					 })*/
 
                     //获取个人信息
                     // this.getInfoHandle();
